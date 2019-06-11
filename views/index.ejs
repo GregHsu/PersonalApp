@@ -1,11 +1,15 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<%- include('header') -%>
+<%- include('menu') -%>
+
+    <div class="jumbotron">
+        <h1>Gamer List</h1>
+        <p>Welcome to Game List</p>
+    </div>
+
+    <ul>
+      <li><a href="/game1">Game1</a></li>
+      <li><a href="/game2">Game2</a></li>
+      <li><a href="/game3">Game3</a></li>
+    </ul>
+
+<%- include('footer') -%>
