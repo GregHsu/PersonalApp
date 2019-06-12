@@ -8,14 +8,15 @@ exports.saveForm = ( req, res ) => {
   let newForm = new Form(
     {
     name: req.body.name,
-    comments: req.body.comments,
+    comment: req.body.comment,
     }
   )
 
-  //console.log("skill = "+newSkill)
+  console.log("newForm = "+newForm)
 
   newForm.save()
     .then( () => {
+      console.log("saved the form data")
       res.redirect( '/forum' );
     } )
     .catch( error => {
@@ -28,9 +29,9 @@ exports.getAllForm = ( req, res ) => {
   //gconsle.log('in getAllSkills')
   Form.find()
     .exec()
-    .then( ( form ) => {
-      res.render( 'form', {
-        comments: comments, title: "comments"
+    .then( ( comments ) => {
+      res.render( 'forum', {
+        comments: comments, title: "comments", version:"0.1"
       } );
     } )
     .catch( ( error ) => {

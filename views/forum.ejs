@@ -3,14 +3,14 @@
 
     <div class="jumbotron">
         <h1>Forum</h1>
-        <p>Welcome to Forumt</p>
+        <p>Welcome to Forum <%= version %></p>
     </div>
 
     <ol>
-      <% for(i = 0l i<comments.length; i++){ %>
+      <% for(i = 0; i<comments.length; i++){ %>
         <li>
-          <%= comments[i].name %>
-          <%= comments[i].comments %> 
+          <b><%= comments[i].name %></b>
+          <i><%= comments[i].comment %></i>
         </li>
       <% } %>
     </ol>

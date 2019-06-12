@@ -36,9 +36,7 @@ app.get('/', function(req, res, next) {
   res.render('index',{title:"Game List"});
 });
 
-app.get('/forum', function(req, res, next) {
-  res.render('forum',{title:"Forum"});
-});
+app.get('/forum', formController.getAllForm);
 
 app.get('/game1', function(req, res, next) {
   res.render('game1',{title:"Game 1"});
