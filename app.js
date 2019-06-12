@@ -22,6 +22,27 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+app.get('/', function(req, res, next) {
+  res.render('index',{title:"Game List"});
+});
+
+app.get('/game1', function(req, res, next) {
+  res.render('game1',{title:"Game 1"});
+});
+
+app.get('/game2', function(req, res, next) {
+  res.render('game2',{title:"Game 2"});
+});
+
+app.get('/game3', function(req, res, next) {
+  res.render('game3',{title:"Game 3"});
+});
+
+app.post('/processform', function(req,res,next) {
+  res.render('formdata',
+    {title:"Form Data", name:req.body.name, coms:req.body.Comments})
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
