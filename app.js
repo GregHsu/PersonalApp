@@ -40,7 +40,7 @@ app.get('/game3', function(req, res, next) {
 
 app.post('/processform', function(req,res,next) {
   res.render('formdata',
-    {title:"Form Data", name:req.body.name, coms:req.body.Comments})
+    {title:"Form Data", name:req.body.name, coms:req.body.comments})
 });
 
 // catch 404 and forward to error handler
