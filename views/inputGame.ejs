@@ -1,0 +1,32 @@
+<form method="post" action="/processgame">
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Name</label>
+    <input type="text" class="form-control" name="gname" >
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Developer</label>
+    <input type="text" class="form-control" name="gdeveloper">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Genre</label>
+    <input type="text" class="form-control" name="ggenre">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Release Date</label>
+    <input type="text" class="form-control" name="gdate">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Release Date</label>
+    <input type="text" class="form-control" name="gplatform">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Info</label>
+    <textarea name="ginfo" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+
+  <% if (loggedIn) { %>
+    <input type="submit">
+  <% } else { %>
+    You must be logged in to submit form info.
+  <% } %>
+</form>

@@ -23,6 +23,7 @@ db.once('open', function() {
 });
 
 const formController = require('./controllers/formController')
+const gameController = require('./controllers/gameController')
 
 // Authentication
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -141,6 +142,14 @@ app.get('/', function(req, res, next) {
 
 app.get('/forum', formController.getAllForm);
 
+app.get('/inputGame', function(req, res, next) {
+  res.render('inputGame',{title:"Game Input"});
+});
+
+app.get('/game', function(req, res, next) {
+  res.render('game',{title:"Game Input"});
+});
+
 app.get('/game1', function(req, res, next) {
   res.render('game1',{title:"Game 1"});
 });
@@ -153,14 +162,13 @@ app.get('/game3', function(req, res, next) {
   res.render('game3',{title:"Game 3"});
 });
 
-function processFormData(req,res,next) {
-  res.render('formdata',
-    {title:"Form Data", name:req.body.name, coms:req.body.comments})
-};
-
 app.post('/processform', formController.saveForm);
 
 app.get('/forum', formController.getAllForm);
+
+app.post('/processgame', gameController.saveForm);
+
+app.get('/game/:id', gameController.getOneGame);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

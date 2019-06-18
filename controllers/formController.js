@@ -1,5 +1,5 @@
 'use strict';
-const Form = require( '../models/form' );
+const Form = require( '../models/Form' );
 //console.log("loading the forms Controller")
 
 exports.saveForm = ( req, res ) => {

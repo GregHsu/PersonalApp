@@ -8,10 +8,11 @@
 
     <ol>
       <% for(i = 0; i<comments.length; i++){ %>
-        <li> <a href="/forum/<%= comments[i]._id %>">
-          <%= comments[i].name %></a>
+        <li> <a href="/forum/<%= comments[i]._id %>"></a>
+          <%= comments[i].name %>
           <i>
-          <%= comments[i].comment %></\/i>
+          <%= comments[i].comment %>
+          </i>
         </li>
       <% } %>
     </ol>

@@ -1,0 +1,20 @@
+<%- include('header') -%>
+<%- include('menu') -%>
+
+    <div class="jumbotron">
+        <h1>Comment for <%= Game._id %> </h1>
+    </div>
+
+    <ol>
+      <% for(i = 0; i<comments.length; i++){ %>
+        <li> <a href="/game/<%= comments[i]._id %>"></a>
+          <%= comments[i].gname %>
+          <i><%= comments[i].gdeveloper %></i>
+          <i><%= comments[i].ggenre %></i>
+          <i><%= comments[i].gdate %></i>
+          <i><%= comments[i].gplatform %></i>
+          <i><%= comments[i].ginfo %></i>
+        </li>
+      <% } %>
+    </ol>
+ <%- include('footer') -%>
