@@ -7,7 +7,7 @@ exports.saveForm = ( req, res ) => {
   //console.dir(req)
   let newForm = new Form(
     {
-    name: req.body.name,
+    name: req.user.googlename,
     comment: req.body.comment,
     }
   )
