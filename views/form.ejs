@@ -7,5 +7,9 @@
     <label for="exampleFormControlTextarea1">Comments</label>
     <textarea name="comment" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
   </div>
-  <input type="submit">
+  <% if (loggedIn) { %>
+    <input type="submit">
+  <% } else { %>
+    You must be logged in to submit form info.
+  <% } %>
 </form>
