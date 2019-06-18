@@ -7,6 +7,13 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+// AUTHENTICATION MODULES
+session = require("express-session"),
+bodyParser = require("body-parser"),
+User = require( './models/User' ),
+flash = require('connect-flash')
+// END OF AUTHENTICATION MODULES
+
 const mongoose = require( 'mongoose' );
 mongoose.connect( 'mongodb://localhost/mydb' );
 const db = mongoose.connection;
@@ -16,6 +23,13 @@ db.once('open', function() {
 });
 
 const formController = require('./controllers/formController')
+
+// Authentication
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+// here we set up authentication with passport
+const passport = require('passport')
+const configPassport = require('./config/passport')
+configPassport(passport)
 
 var app = express();
 
@@ -28,6 +42,95 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+/*************************************************************************
+     HERE ARE THE AUTHENTICATION ROUTES
+**************************************************************************/
+
+app.use(session({ secret: 'zzbbyanana' }));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+const approvedLogins = ["greghsu23@gmail.com","greghsu23@brandeis.edu"];
+
+// here is where we check on their logged in status
+app.use((req,res,next) => {
+  res.locals.title="Game List"
+  res.locals.loggedIn = false
+  if (req.isAuthenticated()){
+    if (req.user.googleemail.endsWith("@brandeis.edu") ||
+      approvedLogins.includes(req.user.googleemail))
+      {
+        console.log("user has been Authenticated")
+        res.locals.user = req.user
+        res.locals.loggedIn = true
+      }
+    else {
+      res.locals.loggedIn = false
+    }
+    console.log('req.user = ')
+    console.dir(req.user)
+  }
+  next()
+})
+
+// here are the authentication routes
+app.get('/loginerror', function(req,res){
+  res.render('loginerror',{})
+})
+
+app.get('/login', function(req,res){
+  res.render('login',{})
+})
+
+// route for logging out
+app.get('/logout', function(req, res) {
+  req.session.destroy((error)=>{console.log("Error in destroying session: "+error)});
+  console.log("session has been destroyed")
+  req.logout();
+  res.redirect('/');
+});
+
+// =====================================
+// GOOGLE ROUTES =======================
+// =====================================
+// send to google to do the authentication
+// profile gets us their basic information including their name
+// email gets their emails
+app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+
+app.get('/login/authorized',
+  passport.authenticate('google', {
+    successRedirect : '/',
+    failureRedirect : '/loginerror'
+  })
+);
+
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {
+  console.log("checking to see if they are authenticated!")
+  // if user is authenticated in the session, carry on
+  res.locals.loggedIn = false
+  if (req.isAuthenticated()){
+    console.log("user has been Authenticated")
+    res.locals.loggedIn = true
+    return next();
+  } else {
+    console.log("user has not been authenticated...")
+    res.redirect('/login');
+  }
+}
+
+// we require them to be logged in to see their profile
+app.get('/profile', isLoggedIn, function(req, res) {
+  res.render('profile')/*, {
+    user : req.user // get the user out of session and pass to template
+  });*/
+});
+
+// END OF THE AUTHENTICATION ROUTES
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
