@@ -24,6 +24,7 @@ db.once('open', function() {
 
 const formController = require('./controllers/formController')
 const gameController = require('./controllers/gameController')
+const profileController = require('./controllers/profileController')
 
 // Authentication
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -131,12 +132,15 @@ app.get('/profile', isLoggedIn, function(req, res) {
   });*/
 });
 
+app.get('/editProfile', isLoggedIn, (req, res)=> {
+  res.render('editProfile')
+});
+
+app.post('/updateProfile', profileController.update);
+
 // END OF THE AUTHENTICATION ROUTES
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-
-app.get('/', function(req, res, next) {
+app.get('/', gameController.getAllGame, function(req, res, next) {
   res.render('index',{title:"Game List"});
 });
 
@@ -146,29 +150,15 @@ app.get('/inputGame', function(req, res, next) {
   res.render('inputGame',{title:"Game Input"});
 });
 
-app.get('/game', function(req, res, next) {
-  res.render('game',{title:"Game Input"});
-});
-
-app.get('/game1', function(req, res, next) {
-  res.render('game1',{title:"Game 1"});
-});
-
-app.get('/game2', function(req, res, next) {
-  res.render('game2',{title:"Game 2"});
-});
-
-app.get('/game3', function(req, res, next) {
-  res.render('game3',{title:"Game 3"});
-});
-
 app.post('/processform', formController.saveForm);
 
 app.get('/forum', formController.getAllForm);
 
-app.post('/processgame', gameController.saveForm);
+app.post('/processgame', gameController.saveGame);
 
-app.get('/game/:id', gameController.getOneGame);
+app.get('/index', gameController.getAllGame);
+
+app.get('/info/:id', gameController.getOneGame);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

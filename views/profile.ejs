@@ -1,10 +1,14 @@
 <%- include('header') -%>
 <%- include('menu') -%>
   <div class="jumbotron">
-  <h1>YellowCartwheel Profile</h1>
-  <p> Welcome <%= user.googlename %>
-      with email <%= user.googleemail %>
-      You are logged in to YellowCartwheel.
-  </p>
+    <h1>Game List Profile for <%= user.userName %></h1>
+    img src="<%= user.profilePicURL%>" width="200">
+    <hr>
+    <p> Welcome <%= user.googlename %>
+        with email <%= user.googleemail %>
+        You are logged in to Game List.
+    </p>
+    <p> Last updated on <%= user.lastUpdate %> </p>
+    <a href="/editProfile">edit profile</a>
   </div>
 <%- include('footer') -%>

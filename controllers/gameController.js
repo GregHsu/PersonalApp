@@ -2,7 +2,7 @@
 const Game = require( '../models/Game' );
 //console.log("loading the forms Controller")
 
-exports.saveForm = ( req, res ) => {
+exports.saveGame = ( req, res ) => {
   //console.log("in saveSkill!")
   //console.dir(req)
   let newGame = new Game(
@@ -20,12 +20,34 @@ exports.saveForm = ( req, res ) => {
 
   newGame.save()
     .then( (arg) => {
-      res.redirect( '/game/'+arg._id );
+      //res.redirect( '/index/'+arg._id );
+      res.redirect( '/index/');
     } )
     .catch( error => {
       res.send( error );
     } );
 };
+
+
+exports.getAllGame = ( req, res ) => {
+  //gconsle.log('in getAllSkills')
+  Game.find()
+    .exec()
+    .then( ( infos ) => {
+      console.dir(infos)
+      res.render( 'index', {
+        infos: infos, title: "games", version:"0.1"
+      } );
+    } )
+    .catch( ( error ) => {
+      console.log( error.message );
+      return [];
+    } )
+    .then( () => {
+      //console.log( 'skill promise complete' );
+    } );
+};
+
 
 // this displays all of the skills
 exports.getOneGame = ( req, res ) => {
@@ -34,9 +56,10 @@ exports.getOneGame = ( req, res ) => {
   console.log('the id is '+id)
   Game.findOne({_id:id})
     .exec()
-    .then( ( comments ) => {
-      res.render( 'gname', {
-        comments:comments, title:"gname"
+    .then( ( info ) => {
+      console.dir(info)
+      res.render( 'info', {
+        info:info, title:"game"
       } );
     } )
     .catch( ( error ) => {

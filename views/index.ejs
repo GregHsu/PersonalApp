@@ -7,9 +7,11 @@
     </div>
 
     <ul>
-      <li><a href="/game1">Game1</a></li>
-      <li><a href="/game2">Game2</a></li>
-      <li><a href="/game3">Game3</a></li>
+      <% for(i = 0; i<infos.length; i++){ %>
+        <li> <a href="/info/<%= infos[i]._id %>">
+          <h4><%= infos[i].gname %></h4></a>
+        </li>
+      <% } %>
     </ul>
 
 <%- include('footer') -%>

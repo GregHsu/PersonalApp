@@ -10,6 +10,10 @@ var userSchema = Schema( {
   googlename:String,
   googleemail:String,
   description: String,
+  profilePicURL: String,
+  bio: String,
+  lastUpdate: Date,
+  userName: String
 } );
 
 module.exports = mongoose.model( 'User', userSchema );
