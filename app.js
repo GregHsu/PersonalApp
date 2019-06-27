@@ -62,18 +62,12 @@ app.use((req,res,next) => {
   res.locals.title="Game List"
   res.locals.loggedIn = false
   if (req.isAuthenticated()){
-    if (req.user.googleemail.endsWith("@brandeis.edu") ||
-      approvedLogins.includes(req.user.googleemail))
-      {
-        console.log("user has been Authenticated")
-        res.locals.user = req.user
-        res.locals.loggedIn = true
-      }
-    else {
-      res.locals.loggedIn = false
-    }
-    console.log('req.user = ')
-    console.dir(req.user)
+    console.log("user has been Authenticated")
+    res.locals.user = req.user
+    res.locals.loggedIn = true
+  }
+  else {
+    res.locals.loggedIn = false
   }
   next()
 })
@@ -135,6 +129,10 @@ app.get('/profile', isLoggedIn, function(req, res) {
 app.get('/editProfile', isLoggedIn, (req, res)=> {
   res.render('editProfile')
 });
+
+app.get('/profiles', isLoggedIn, profileController.getAllProfiles);
+
+app.get('/showProfile/:id', isLoggedIn, profileController.getOneProfile);
 
 app.post('/updateProfile', profileController.update);
 
