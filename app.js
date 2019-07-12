@@ -25,6 +25,7 @@ db.once('open', function() {
 const formController = require('./controllers/formController')
 const gameController = require('./controllers/gameController')
 const profileController = require('./controllers/profileController')
+const recipesController = require('./controllers/recipesController')
 
 // Authentication
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -157,6 +158,12 @@ app.post('/processgame', gameController.saveGame);
 app.get('/index', gameController.getAllGame);
 
 app.get('/info/:id', gameController.getOneGame);
+
+app.get('/recipes',recipesController.getAllRecipes)
+
+app.post('/recipes',recipesController.saveRecipes)
+
+app.post('/recipesDelete',recipesController.deleteRecipes)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

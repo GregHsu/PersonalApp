@@ -1,0 +1,40 @@
+
+<div class="jumbotron">
+  <h1>Recipes</h1>
+</div>
+
+<form method="post" action="/recipes">
+  <h2>New Recipe:</h2>
+  Dish Name: <br>
+  <textarea id="r_name" name="r_name"></textarea>
+  <br>
+  Ingredients: <br>
+  <textarea id="r_ingredients" name="r_ingredients" rows="5" cols="50"></textarea>
+  <br>
+  Direction: <br>
+  <textarea id="r_direction" name="r_direction" rows="10" cols="50"></textarea>
+  <br>
+  <input type="submit">
+</form>
+
+  <hr>
+
+<form method="post" action="/recipesDelete">
+  <input type="submit" value="delete marked">
+  <ol>
+    <% for(i = 0; i<recipes.length; i++){  %>
+    <li>
+      <%= recipes[i].userName %>
+      <%= recipes[i].r_createdAt %>
+      <% console.dir([recipes[i].userId,user._id]) %>
+      <% if (recipes[i].userId.equals(user._id)) { %>
+        <input type="checkbox" name="delete" value="<%= recipes[i]._id %>">
+      <% } %>
+      <br>
+      <p>Dish Name: <%= recipes[i].r_name %></p>
+      <p>Ingredients: <%= recipes[i].r_ingredients %></p>
+      <p>Direction: <%= recipes[i].r_direction %></p>
+    </li>
+    <% } %>
+  </ol>
+</form>
